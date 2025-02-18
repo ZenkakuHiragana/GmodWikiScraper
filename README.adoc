@@ -45,3 +45,15 @@ luagenerator.ps1::
 
 globalfunction.ps1::
     Bunch of functions used for generating Lua annotation, which is messed up.
+
+== Loading annotations on LuaLS
+
+You can make two code spaces to configure both serverside and clientside definition.
+An example would be `wikiscraper-cl.code-workspace` and `wikiscraper-sv.code-workspace`.
+
+- It could be a good practice to move the annotation folder to `.vscode`
+  and add it to `.gitignore` in your addon repository.
+- Add the folder of annotation files to `Lua.workspace.library`.
+  Probably the glob pattern (`**`) could be used here but I didn't test it.
+- Don't forget to add the folder of annotation files to `Lua.workspace.ignoreDir`
+  in order to prevent false diagnostics results.
