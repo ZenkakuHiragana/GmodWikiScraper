@@ -1,0 +1,39 @@
+= GmodWikiScraper
+
+PowerShell script that fetches GMOD API from the wiki and converts them into Lua Language Server annotation files.
+
+== Usage
+
+WARNING: The script requires PowerShell 7.x and link:https://github.com/mikefarah/yq[mikefarah/yq].
+
+wikiscraper.ps1::
+    Fetches all pages in wiki.facepunch.com/gmod as JSON format and stores the results under `$PSScriptRoot\pages` folder. +
+    This will try to find `$PSScriptRoot\pages\pagelist.json` as a cache and fetches only updated pages since the last run if the cache exists.
+
+wikijsonparser.ps1::
+    Iterates through all JSON files under `$PSScriptRoot\pages` and creates the following JSON and YAML files under `$PSScriptRoot\work` folder:
+        - **allpages-raw** +
+            All JSON data will be merged together and saved as this file.
+        - **allpages-fixed** +
+            The raw JSON contains LF, CRLF and escaped line breaks mixed together
+            so the script fixes it to use only LF as line break.
+        - **allpages-slim** +
+            Removed unnecessary fields from allpages-fixed
+        - **allpages-cl / allpages-sv** +
+            Filtered from allpages-slim to extract clientside / serverside definition.
+        - **enums-cl / enums-sv** for Enums.
+        - **events-cl / events-sv** for Hooks.
+        - **functions-cl / functions-sv** for functions.
+        - **panels-cl / panels-sv** for VGUI functions.
+        - **structs-cl / structs-sv** for Structs.
+        - **types** for type definition.
+    The YAML output is only for human readability so it can be disabled by commenting-out them.
+
+wikijsonanalyzer.ps1::
+    Reading JSON files under `$PSScriptRoot\work` and counts appearance of each tag.  The results are saved under `$PSScriptRoot\work\stats`.
+
+luagenerator.ps1::
+    Reading JSON files under `$PSScriptRoot\work` and generates Lua annotation files and saves them under `$PSScriptRoot\work\server`, `$PSScriptRoot\work\client`, and `$PSScriptRoot\work\types`.
+
+globalfunction.ps1::
+    Bunch of functions used for generating Lua annotation, which is messed up.

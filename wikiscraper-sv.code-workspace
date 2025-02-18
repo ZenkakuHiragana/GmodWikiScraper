@@ -1,0 +1,25 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"Lua.runtime.version": "LuaJIT",
+		"Lua.diagnostics.disable": [
+			"deprecated"
+		],
+		"Lua.workspace.library": [
+			"${workspaceFolder}/work/server/enums",
+			"${workspaceFolder}/work/server/events",
+			"${workspaceFolder}/work/server/functions",
+			"${workspaceFolder}/work/server/panels",
+			"${workspaceFolder}/work/server/structs",
+			"${workspaceFolder}/work/types"
+		],
+		"Lua.workspace.ignoreDir": [
+			".vscode",
+			"work"
+		]
+	}
+}
