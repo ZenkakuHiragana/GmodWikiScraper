@@ -1,4 +1,7 @@
 .trash
+.vscode/client
+.vscode/server
+.vscode/types
 dump.xml
 icons
 pages

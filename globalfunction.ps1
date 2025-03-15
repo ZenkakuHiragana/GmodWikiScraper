@@ -163,7 +163,7 @@ function Get-AllText {
                 example       { Get-Example     $Element; break }
                 code          { Get-Code        $Element; break }
                 output        { Get-Output      $Element; break }
-                pagelist      { Get-Pagelist    $Element; break }
+                pagelist      { Get-PageList    $Element; break }
                 Default       {
                     $str = "<Unknown tag: $ElementName>"
                     $m = 31
@@ -493,7 +493,7 @@ function Get-Output {
     "$Text`n"
 }
 # <pagelist>タグを整形する。gameeventでしか使われていないようだ。
-function Get-Pagelist {
+function Get-PageList {
     param([System.Xml.XmlNode]$Element)
     $Category = $Element.category
     $Query = @(
@@ -501,7 +501,7 @@ function Get-Pagelist {
         "    | select(.address | contains(`"$Category/`"))"
         "    | { `"address`": .address, `"title`": .title }"
         "]") -join "`n"
-    $Pages = yq -p json -o json $Query ..\allpages-slim.json
+    $Pages = yq -p json -o json $Query $PSScriptRoot\work\allpages-slim.json
     $Text = "`n"
     $Pages | ConvertFrom-Json | ForEach-Object {
         $Address = $_.address

@@ -6,17 +6,17 @@
 
 # 出力フォルダの準備
 Push-Location -LiteralPath "$PSScriptRoot"
-New-Item work\types            -ItemType Directory -ErrorAction SilentlyContinue | Out-Null
-New-Item work\server\functions -ItemType Directory -ErrorAction SilentlyContinue | Out-Null
-New-Item work\client\functions -ItemType Directory -ErrorAction SilentlyContinue | Out-Null
-New-Item work\server\enums     -ItemType Directory -ErrorAction SilentlyContinue | Out-Null
-New-Item work\client\enums     -ItemType Directory -ErrorAction SilentlyContinue | Out-Null
-New-Item work\server\panels    -ItemType Directory -ErrorAction SilentlyContinue | Out-Null
-New-Item work\client\panels    -ItemType Directory -ErrorAction SilentlyContinue | Out-Null
-New-Item work\server\structs   -ItemType Directory -ErrorAction SilentlyContinue | Out-Null
-New-Item work\client\structs   -ItemType Directory -ErrorAction SilentlyContinue | Out-Null
-New-Item work\server\events    -ItemType Directory -ErrorAction SilentlyContinue | Out-Null
-New-Item work\client\events    -ItemType Directory -ErrorAction SilentlyContinue | Out-Null
+New-Item .vscode\types            -ItemType Directory -ErrorAction SilentlyContinue | Out-Null
+New-Item .vscode\server\functions -ItemType Directory -ErrorAction SilentlyContinue | Out-Null
+New-Item .vscode\client\functions -ItemType Directory -ErrorAction SilentlyContinue | Out-Null
+New-Item .vscode\server\enums     -ItemType Directory -ErrorAction SilentlyContinue | Out-Null
+New-Item .vscode\client\enums     -ItemType Directory -ErrorAction SilentlyContinue | Out-Null
+New-Item .vscode\server\panels    -ItemType Directory -ErrorAction SilentlyContinue | Out-Null
+New-Item .vscode\client\panels    -ItemType Directory -ErrorAction SilentlyContinue | Out-Null
+New-Item .vscode\server\structs   -ItemType Directory -ErrorAction SilentlyContinue | Out-Null
+New-Item .vscode\client\structs   -ItemType Directory -ErrorAction SilentlyContinue | Out-Null
+New-Item .vscode\server\events    -ItemType Directory -ErrorAction SilentlyContinue | Out-Null
+New-Item .vscode\client\events    -ItemType Directory -ErrorAction SilentlyContinue | Out-Null
 . .\globalfunction.ps1
 Pop-Location
 
@@ -34,7 +34,7 @@ function Get-Annotation {
         Default { "" }
     }
     $OutDir = $FileName -replace "-.+$"
-    Push-Location -LiteralPath "$PSScriptRoot\work\$Realm$OutDir"
+    Push-Location -LiteralPath "$PSScriptRoot\.vscode\$Realm$OutDir"
     try {
         # yqのフィルタでページタイトルやアドレスなどの必要な情報を出力のXMLに含める
         $Filter = @(

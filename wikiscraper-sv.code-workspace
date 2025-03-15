@@ -5,21 +5,28 @@
 		}
 	],
 	"settings": {
-		"Lua.runtime.version": "LuaJIT",
 		"Lua.diagnostics.disable": [
 			"deprecated"
 		],
+		"Lua.runtime.nonstandardSymbol": [
+			"/**/",
+			"//",
+			"!",
+			"!=",
+			"&&",
+			"||",
+			"continue"
+		],
+		"Lua.runtime.special": {
+			"include": "dofile"
+		},
+		"Lua.runtime.version": "LuaJIT",
 		"Lua.workspace.library": [
-			"${workspaceFolder}/work/server/enums",
-			"${workspaceFolder}/work/server/events",
-			"${workspaceFolder}/work/server/functions",
-			"${workspaceFolder}/work/server/panels",
-			"${workspaceFolder}/work/server/structs",
-			"${workspaceFolder}/work/types"
+			".vscode/server",
+			".vscode/types",
 		],
 		"Lua.workspace.ignoreDir": [
-			".vscode",
-			"work"
+			".vscode"
 		]
 	}
 }
