@@ -7,6 +7,53 @@ $SharedImage = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/
 # Lua標準関数のアノテーションはしない
 $BuiltinFunctions = Get-Content builtin.json | ConvertFrom-Json
 
+# Wikiで拾いきれない型情報を書くところ
+$OverrideJson = Get-Content "$PSScriptRoot\overrides.json" -Encoding utf8 | ConvertFrom-Json
+
+# NodeからXPathを取得する
+# Given a [System.Xml.XmlNode] instance, returns the path to it
+# inside its document in XPath form.
+# Supports element, attribute, and text/CDATA nodes.
+# https://stackoverflow.com/questions/24043313/find-xml-nodes-full-xpath
+function Get-XPath {
+    param (
+        [ValidateNotNull()]
+        [System.Xml.XmlNode] $node
+    )
+  
+    if ($node -is [System.Xml.XmlDocument]) { return '' } # Root reached
+    $isAttrib = $node -is [System.Xml.XmlAttribute]
+    
+    # IMPORTANT: Use get_*() accessors for all type-native property access,
+    #            to prevent name collision with Powershell's adapted-DOM ETS properties.
+  
+    # Get the node's name.
+    $name = if ($isAttrib) {
+        '@' + $node.get_Name()
+    } elseif ($node -is [System.Xml.XmlText] -or $node -is [System.Xml.XmlCDataSection]) {
+        'text()'
+    } else { # element
+        $node.get_Name()
+    }
+  
+    # Count any preceding siblings with the same name.
+    # Note: To avoid having to provide a namespace manager, we do NOT use
+    #       an XPath query to get the previous siblings.
+    $prevSibsCount = 0; $prevSib = $node.get_PreviousSibling()
+    while ($prevSib) {
+        if ($prevSib.get_Name() -ceq $name) { ++$prevSibsCount }
+        $prevSib = $prevSib.get_PreviousSibling()
+    }
+    
+    # Determine the (1-based) index among like-named siblings, if applicable.
+    $ndx = if ($prevSibsCount) { '[{0}]' -f (1 + $prevSibsCount) }
+    
+    # Determine the owner / parent element.
+    $ownerOrParentElem = if ($isAttrib) { $node.get_OwnerElement() } else { $node.get_ParentNode() }
+  
+    # Recurse upward and concatenate with "/"
+    "{0}/{1}" -f (Get-XPath $ownerOrParentElem), ($name + $ndx)
+}
 # XPathによる検索は大文字小文字を区別するが、
 # Wikiのマークアップがそうとは限らないので区別しないXPathを作る
 function XPathByNameInsensitive {
@@ -284,6 +331,7 @@ function Get-Arg {
 
     # コールバック関数の引数を説明するMarkdown構文を返す
     if ($IsDescription) {
+        $Type = $Type -replace "<.+?>" -replace "fun\(.+?\)(;.+)?", "function"
         $Text = "`n1. **[$Type](https://wiki.facepunch.com/gmod/$Type)"
         if ($AltType) { $Text += " | [$AltType](https://wiki.facepunch.com/gmod/$AltType)" }
         if ($Name) { $Text += " $Name" }
@@ -338,6 +386,7 @@ function Get-Ret {
     
     # コールバック関数の引数を説明するMarkdown構文を返す
     if ($IsDescription) {
+        $Type = $Type -replace "<.+?>" -replace "fun\(.+?\)(;.+)?", "function"
         $Text = "`n1. **[$Type](https://wiki.facepunch.com/gmod/$Type)"
         if ($Name) { $Text += " $Name" }
         $Text += "**  `n   "
@@ -583,6 +632,9 @@ function Get-FunctionDefinition {
         $Text += $ReturnsDescription
     }
     $Text += $Examples -join ""
+    if ($FunctionName -in $OverrideJson.GenericsAdd.PSObject.Properties.Name) {
+        $Text += "---@generic $($OverrideJson.GenericsAdd.$FunctionName)`n"
+    }
     $Text += $ArgsDefinition # ---@param
     $Text += $ReturnsDefinition # ---@return
     "${Text}function $FunctionName($($ArgsName -join ", ")) end"
@@ -641,6 +693,13 @@ function Get-FunctionAnnotation {
     $NumEntry = $Pages.Count
     $Progress = 0
     $Pages | ForEach-Object {
+        $Page = $_
+        $OverrideJson.XPathSubstitution.PSObject.Properties | ForEach-Object {
+            $Element = $Page.SelectSingleNode($_.Name)
+            if ($null -ne $Element) {
+                $Element.Value = $_.Value
+            }
+        }
         $FunctionElement = $_.SelectSingleNode($(XPathByNameInsensitive "function"))
         $ExampleElements = $_.SelectNodes($(XPathByNameInsensitive "example"))
         $DescriptionElement = $FunctionElement.SelectSingleNode($(XPathByNameInsensitive "description"))

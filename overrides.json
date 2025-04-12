@@ -1,0 +1,13 @@
+{
+    "XPathSubstitution": {
+        "function[@name=\"SortedPairs\"]/args/arg[1]/@type":
+            "table<K, V>",
+        "function[@name=\"SortedPairs\"]/rets/ret[1]/@type":
+            "fun(t: table<K, V>, key?: K): K, V",
+        "function[@name=\"SortedPairs\"]/rets/ret[2]/@type":
+            "table<K, V>"
+    },
+    "GenericsAdd": {
+        "SortedPairs": "K, V"
+    }
+}
