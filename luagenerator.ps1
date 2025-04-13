@@ -20,6 +20,10 @@ New-Item .vscode\client\events    -ItemType Directory -ErrorAction SilentlyConti
 . .\globalfunction.ps1
 Pop-Location
 
+# 定数のコピー
+Copy-Item constants-cl.lua .vscode\client
+Copy-Item constants-sv.lua .vscode\server
+
 # アノテーションファイルの生成
 function Get-Annotation {
     param([string]$FileName)
