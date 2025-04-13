@@ -135,7 +135,7 @@ function Get-ElementType {
             $TypesJoin = $Types.Where({ $null -ne $_ }) -join "|"
             $TypesJoin.Trim()
         }
-        if ($Type -match "table") {
+        if ($Type -eq "table") {
             $TryReplace = Find-LinkToType "Structures/"
         }
         elseif ($Type -match "number") {
@@ -144,10 +144,29 @@ function Get-ElementType {
     }
     if ([string]::IsNullOrEmpty($TryReplace)) {
         # file_class 型はFileクラスなので例外的に置き換える
-        $Type -replace "file_class", "File"
+        $Type -replace "file_class", "File" `
+        <# table<T> => T[] #> `
+        -replace "table<([A-Za-z0-9/._-]+)>", "`$1[]"
     }
     else {
         $TryReplace
+    }
+}
+# 型へのリンクを得る
+function Get-TypeLinkText() {
+    param([string]$Type)
+    $Type = $Type `
+        -replace "\[\]" `
+        -replace "<[A-Za-z0-9/._-]+?>" `
+        -replace "fun\(.+?\)(:.+)?", "function"
+    $TableKV = [regex]::Matches($Type, "table<(.+?),\s*(.+?)>")
+    if ($TableKV) {
+        $K = $TableKV.Groups[1].Value
+        $V = $TableKV.Groups[2].Value
+        "[table](https://wiki.facepunch.com/gmod/table)<[$K](https://wiki.facepunch.com/gmod/$K), [$V](https://wiki.facepunch.com/gmod/$V)>"
+    }
+    else {
+        "[$Type](https://wiki.facepunch.com/gmod/$Type)"
     }
 }
 # <callback>タグがある時、その関数シグネチャをfun([args[, ...]])[: returns[, ...]]の形で返す
@@ -331,9 +350,8 @@ function Get-Arg {
 
     # コールバック関数の引数を説明するMarkdown構文を返す
     if ($IsDescription) {
-        $Type = $Type -replace "<.+?>" -replace "fun\(.+?\)(;.+)?", "function"
-        $Text = "`n1. **[$Type](https://wiki.facepunch.com/gmod/$Type)"
-        if ($AltType) { $Text += " | [$AltType](https://wiki.facepunch.com/gmod/$AltType)" }
+        $Text = "`n1. **" + (Get-TypeLinkText $Type)
+        if ($AltType) { $Text += " | " + (Get-TypeLinkText $AltType) }
         if ($Name) { $Text += " $Name" }
         $Text += "**  `n   "
         $Text += $($Element.get_ChildNodes() | Get-AllText) `
@@ -386,8 +404,7 @@ function Get-Ret {
     
     # コールバック関数の引数を説明するMarkdown構文を返す
     if ($IsDescription) {
-        $Type = $Type -replace "<.+?>" -replace "fun\(.+?\)(;.+)?", "function"
-        $Text = "`n1. **[$Type](https://wiki.facepunch.com/gmod/$Type)"
+        $Text = "`n1. **" + (Get-TypeLinkText $Type)
         if ($Name) { $Text += " $Name" }
         $Text += "**  `n   "
         $Text += $($Element.get_ChildNodes() | Get-AllText) `
