@@ -142,3 +142,38 @@ color_transparent = Color(255, 255, 255, 0)
 ---@operator add(VMatrix): VMatrix # Returns new [VMatrix](https://wiki.facepunch.com/gmod/VMatrix) with the result of addition.
 ---@operator mul(VMatrix | Vector): VMatrix # Returns new [VMatrix](https://wiki.facepunch.com/gmod/VMatrix) or [Vector](https://wiki.facepunch.com/gmod/Vector) with the result of multiplication.
 ---@operator sub(VMatrix): VMatrix # Returns new [VMatrix](https://wiki.facepunch.com/gmod/VMatrix) with the result of subtraction.
+
+
+
+---### ![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAAAAAAAAQCEeRdzAAABJklEQVR4nJ3TvUrDYBjF8UeL2mRR70FEULwHBW/IWQt6KbaYxjgJGZyqk3vjItpWKtKpn6bS16b9mzcpQqFNG4ezhJMf4fBExkBDQe75hz23j+n4GGFMpz+V+JkfdXS3pfSbIKNhl7PSPZJXiPXFqu0nRnek0OX4QdFWI6TpXeIVshzZd0gxIBOWFiWC8h1y5QHy4e5TLa5Tsc0JMlwKkeseu+43UnM2qdoG7zfZ1Ije5A/4D2KE404BaRFzFpAGmQssiyQCyyALgUVIPOLtdiKQhERfoA/pzdpIiQSsWD129CE1yxe8FiQsZdMhV358yoHq0CidREjFWptA81MrZnjJC6ePT7QGAQJjAtWm5eWouwdUnS30sDMT7lV3D+l456A+o9/5F23WsF7ghkQuAAAAAElFTkSuQmCC) Description [(📓Wiki)](https://wiki.facepunch.com/gmod/)
+---
+---Table structure representing a mesh vertex used by various functions, such as [IMesh:BuildFromTriangles](https://wiki.facepunch.com/gmod/IMesh:BuildFromTriangles) and [Entity:PhysicsFromMesh](https://wiki.facepunch.com/gmod/Entity:PhysicsFromMesh) and returned by functions such as [util.GetModelMeshes](https://wiki.facepunch.com/gmod/util.GetModelMeshes) and  [PhysObj:GetMesh](https://wiki.facepunch.com/gmod/PhysObj:GetMesh).
+---@class Structure.MeshVertexWithWeights : Structure.MeshVertex
+---Represents the bone this vertex is attached to and how "strong" this vertex
+---is attached to the bone. A vertex can be attached to multiple bones at once.
+---@field weights { bone: integer, weight: number }[]
+
+
+
+---A timer object. The returned timer will be already started with given duration.
+---@class UtilTimer
+UtilTimer = {}
+
+---Resets and stops the timer.
+function UtilTimer:Reset() end
+
+---(Re)starts the timer with given duration.
+---@param duration number?
+function UtilTimer:Start(duration) end
+
+---Returns `true` if the timer has been started. It will continue to return `true` even after the duration has passed.
+---@return boolean
+function UtilTimer:Started() end
+
+---Returns `true` if the timer duration has elapsed since its creation or the call to `Start()`.
+---@return boolean
+function UtilTimer:Elapsed() end
+
+---Returns amount of time since timer started.
+---@return number
+function UtilTimer:GetElapsedTime() end

@@ -101,7 +101,11 @@
         "function[@parent=\"render\" and @name=\"OverrideDepthEnable\"]/args/arg[2]/@type": "boolean?",
         "function[@parent=\"render\" and @name=\"ModelMaterialOverride\"]/args/arg[1]/@type": "IMaterial?",
         
+        "function[@parent=\"string\" and @name=\"Explode\"]/rets/ret[1]/@type": "string[]",
+        "function[@parent=\"string\" and @name=\"GetExtensionFromFilename\"]/rets/ret[1]/@type": "string?",
+        "function[@parent=\"string\" and @name=\"gfind\"]/rets/ret[1]/@type": "fun(): string",
         "function[@parent=\"string\" and @name=\"Split\"]/rets/ret[1]/@type": "string[]",
+        "function[@parent=\"string\" and @name=\"ToTable\"]/rets/ret[1]/@type": "string[]",
 
         "function[@parent=\"surface\" and @name=\"DrawCircle\"]/args/arg[4]/@type": "number|Color",
         "function[@parent=\"surface\" and @name=\"DrawCircle\"]/args/arg[5]/@type": "number?",
@@ -175,6 +179,25 @@
         "function[@parent=\"table\" and @name=\"SortByMember\"]/args/arg[2]/@type": "K",
         "function[@parent=\"table\" and @name=\"SortDesc\"]/args/arg[1]/@type": "T[]",
         
+        "function[@parent=\"util\" and @name=\"GetModelMeshes\"]/rets/ret[1]/@type":
+            "{ material: string, triangles: Structure.MeshVertexWithWeights[], vertices: Structure.MeshVertexWithWeights[] }[]",
+        "function[@parent=\"util\" and @name=\"GetModelMeshes\"]/rets/ret[2]/@type":
+            "{ parent: integer, matrix: VMatrix }[]",
+        "function[@parent=\"util\" and @name=\"GetSurfaceData\"]/rets/ret[1]/@type":
+            "Structure.SurfacePropertyData?",
+        "function[@parent=\"util\" and @name=\"GetUserGroups\"]/rets/ret[1]/@type":
+            "table<string, { name: string, group: string }>",
+        "function[@parent=\"util\" and @name=\"IntersectRayWithOBB\"]/rets/ret[1]/@type": "Vector?",
+        "function[@parent=\"util\" and @name=\"IntersectRayWithOBB\"]/rets/ret[2]/@type": "Vector?",
+        "function[@parent=\"util\" and @name=\"IntersectRayWithOBB\"]/rets/ret[3]/@type": "number?",
+        "function[@parent=\"util\" and @name=\"IntersectRayWithPlane\"]/rets/ret[1]/@type": "Vector?",
+        "function[@parent=\"util\" and @name=\"IntersectRayWithSphere\"]/rets/ret[1]/@type": "number?",
+        "function[@parent=\"util\" and @name=\"IntersectRayWithSphere\"]/rets/ret[2]/@type": "number?",
+        "function[@parent=\"util\" and @name=\"KeyValuesToTable\"]/rets/ret[1]/@type": "table<string, string>",
+        "function[@parent=\"util\" and @name=\"KeyValuesToTablePreserveOrder\"]/rets/ret[1]/@type":
+            "{ Key: string, Value: table<string, string>[] }[]",
+        "function[@parent=\"util\" and @name=\"NetworkIDToString\"]/rets/ret[1]/@type": "string?",
+        "function[@parent=\"util\" and @name=\"Timer\"]/rets/ret[1]/@type": "UtilTimer",
         "function[@parent=\"util\" and @name=\"QuickTrace\"]/args/arg[3]/@type":
             "Entity|Entity[]|string[]|fun(ent: Entity): boolean",
 
