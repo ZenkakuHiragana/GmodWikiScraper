@@ -140,7 +140,8 @@ color_transparent = Color(255, 255, 255, 0)
 
 ---@class VMatrix
 ---@operator add(VMatrix): VMatrix # Returns new [VMatrix](https://wiki.facepunch.com/gmod/VMatrix) with the result of addition.
----@operator mul(VMatrix | Vector): VMatrix # Returns new [VMatrix](https://wiki.facepunch.com/gmod/VMatrix) or [Vector](https://wiki.facepunch.com/gmod/Vector) with the result of multiplication.
+---@operator mul(VMatrix): VMatrix # Returns new [VMatrix](https://wiki.facepunch.com/gmod/VMatrix) or [Vector](https://wiki.facepunch.com/gmod/Vector) with the result of multiplication.
+---@operator mul(Vector): Vector # Returns new [VMatrix](https://wiki.facepunch.com/gmod/VMatrix) or [Vector](https://wiki.facepunch.com/gmod/Vector) with the result of multiplication.
 ---@operator sub(VMatrix): VMatrix # Returns new [VMatrix](https://wiki.facepunch.com/gmod/VMatrix) with the result of subtraction.
 
 
