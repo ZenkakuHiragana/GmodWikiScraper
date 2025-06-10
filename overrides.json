@@ -1,5 +1,7 @@
 {
     "XPathSubstitution": {
+        "function[@name=\"CreateClientConVar\"]/args/arg[2]/@type": "string|number",
+        "function[@name=\"CreateConVar\"]/args/arg[2]/@type": "string|number",
         "function[@name=\"RandomPairs\"]/args/arg[1]/@type": "table<K, V>",
         "function[@name=\"RandomPairs\"]/rets/ret[1]/@type": "fun(t: table<K, V>, key?: K): K, V",
         "function[@name=\"RandomPairs\"]/rets/ret[2]/@type": "table<K, V>",
@@ -81,7 +83,10 @@
             "{ Other: PhysObj, EnergyAbsorbed: number, FrictionCoefficient: number, NormalForce: number, Normal: Vector, ContactPoint: Vector, Material: integer, MaterialOther: integer }[]",
         "function[@parent=\"PhysObj\" and @name=\"GetMesh\"]/rets/ret[1]/@type": "Structure.MeshVertex[]?",
         "function[@parent=\"PhysObj\" and @name=\"GetMeshConvexes\"]/rets/ret[1]/@type": "Structure.MeshVertex[]?",
+        
+        "function[@parent=\"Vector\" and @name=\"Mul\"]/args/arg[1]/@type": "number|Vector|VMatrix",
 
+        "function[@parent=\"constraint\" and @name=\"GetAllConstrainedEntities\"]/rets/ret[1]/@type": "Entity[]",
         "function[@parent=\"cvars\" and @name=\"GetConVarCallbacks\"]/rets/ret[1]/@type":
         "(fun(convar: string, old: string, new: string)|{ [1}: fun(convar: string, old: string, new: string), [2}: string }))[]?",
         
@@ -183,6 +188,8 @@
         "function[@parent=\"table\" and @name=\"SortByMember\"]/args/arg[2]/@type": "K",
         "function[@parent=\"table\" and @name=\"SortDesc\"]/args/arg[1]/@type": "T[]",
         
+        "function[@parent=\"undo\" and @name=\"GetTable\"]/rets/ret[1]/@type": "table<integer, Structure.Undo[]>",
+
         "function[@parent=\"util\" and @name=\"GetModelMeshes\"]/rets/ret[1]/@type":
             "{ material: string, triangles: Structure.MeshVertexWithWeights[], vertices: Structure.MeshVertexWithWeights[] }[]",
         "function[@parent=\"util\" and @name=\"GetModelMeshes\"]/rets/ret[2]/@type":
@@ -208,7 +215,30 @@
         "function[@parent=\"vgui\" and @name=\"Create\"]/args/arg[1]/@type": "`T`",
         "function[@parent=\"vgui\" and @name=\"Create\"]/rets/ret[1]/@type": "T",
 
-        "function[@parent=\"PANEL\" and @name=\"Paint\"]/rets/ret[1]/@type": "boolean?"
+        "function[@parent=\"PANEL\" and @name=\"Paint\"]/rets/ret[1]/@type": "boolean?",
+
+        "structure[contains(../address/text(),\"TraceResult\")]/fields/item[@name=\"Entity\"]/@default": "\n",
+        "structure[contains(../address/text(),\"TraceResult\")]/fields/item[@name=\"Fraction\"]/@default": "\n",
+        "structure[contains(../address/text(),\"TraceResult\")]/fields/item[@name=\"FractionLeftSolid\"]/@default": "\n",
+        "structure[contains(../address/text(),\"TraceResult\")]/fields/item[@name=\"HitBox\"]/@default": "\n",
+        "structure[contains(../address/text(),\"TraceResult\")]/fields/item[@name=\"HitGroup\"]/@default": "\n",
+        "structure[contains(../address/text(),\"TraceResult\")]/fields/item[@name=\"HitNormal\"]/@default": "\n",
+        "structure[contains(../address/text(),\"TraceResult\")]/fields/item[@name=\"HitPos\"]/@default": "\n",
+        "structure[contains(../address/text(),\"TraceResult\")]/fields/item[@name=\"HitTexture\"]/@default": "\n",
+        "structure[contains(../address/text(),\"TraceResult\")]/fields/item[@name=\"MatType\"]/@default": "\n",
+        "structure[contains(../address/text(),\"TraceResult\")]/fields/item[@name=\"Normal\"]/@default": "\n",
+        "structure[contains(../address/text(),\"TraceResult\")]/fields/item[@name=\"PhysicsBone\"]/@default": "\n",
+        "structure[contains(../address/text(),\"TraceResult\")]/fields/item[@name=\"StartPos\"]/@default": "\n",
+        "structure[contains(../address/text(),\"TraceResult\")]/fields/item[@name=\"SurfaceProps\"]/@default": "\n",
+        "structure[contains(../address/text(),\"TraceResult\")]/fields/item[@name=\"SurfaceFlags\"]/@default": "\n",
+        "structure[contains(../address/text(),\"TraceResult\")]/fields/item[@name=\"DispFlags\"]/@default": "\n",
+        "structure[contains(../address/text(),\"TraceResult\")]/fields/item[@name=\"Contents\"]/@default": "\n",
+        "structure[contains(../address/text(),\"Undo\")]/fields/item[@name=\"Functions\"]/@type":
+            "{ [1]: fun(self: Structure.Undo, arg2: any, arg3: any), [2]: any, [3]: any }[]",
+        "structure[contains(../address/text(),\"VehicleParams\")]/fields/item[@name=\"axles\"]/@type":
+            "Structure.VehicleParamsAxle[]",
+        "structure[contains(../address/text(),\"VehicleParamsEngine\")]/fields/item[@name=\"gearRatio\"]/@type":
+            "number[]"
     },
     "GenericsAdd": {
         "Either": "T, U",

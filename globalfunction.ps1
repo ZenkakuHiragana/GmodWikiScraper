@@ -135,7 +135,7 @@ function Get-ElementType {
             $TypesJoin = $Types.Where({ $null -ne $_ }) -join "|"
             $TypesJoin.Trim()
         }
-        if ($Type -eq "table") {
+        if ($Type -match "table") {
             $TryReplace = Find-LinkToType "Structures/"
         }
         elseif ($Type -match "number") {
@@ -145,8 +145,12 @@ function Get-ElementType {
     if ([string]::IsNullOrEmpty($TryReplace)) {
         # file_class 型はFileクラスなので例外的に置き換える
         $Type -replace "file_class", "File" `
+        <# number{T} => number #> `
+        -replace "number{([A-Za-z0-9/._-]+)}", "number" `
         <# table<T> => T[] #> `
-        -replace "table<([A-Za-z0-9/._-]+)>", "`$1[]"
+        -replace "table<([A-Za-z0-9/._-]+)>", "`$1[]" `
+        <# table{T} => T #> `
+        -replace "table{([A-Za-z0-9/._-]+)}", "Structure.`$1"
     }
     else {
         $TryReplace
@@ -159,11 +163,16 @@ function Get-TypeLinkText() {
         -replace "\[\]" `
         -replace "<[A-Za-z0-9/._-]+?>" `
         -replace "fun\(.+?\)(:.+)?", "function"
-    $TableKV = [regex]::Matches($Type, "table<(.+?),\s*(.+?)>")
+    $TableKV = [regex]::Matches($Type, "table[<{](.+?),\s*(.+?)[>}]")
+    $TableT = [regex]::Matches($Type, "table[<{]([^>}]+)[>}]")
     if ($TableKV) {
         $K = $TableKV.Groups[1].Value
         $V = $TableKV.Groups[2].Value
         "[table](https://wiki.facepunch.com/gmod/table)<[$K](https://wiki.facepunch.com/gmod/$K), [$V](https://wiki.facepunch.com/gmod/$V)>"
+    }
+    elseif ($TableT) {
+        $T = $TableT.Groups[1].Value
+        "[table](https://wiki.facepunch.com/gmod/table)<[$T](https://wiki.facepunch.com/gmod/$T)>"
     }
     else {
         "[$Type](https://wiki.facepunch.com/gmod/$Type)"
@@ -803,6 +812,13 @@ function Get-PanelAnnotation {
     $Lua = @{}
     $Pages = Get-XmlDocPages $MarkupString
     $Pages | ForEach-Object {
+        $Page = $_
+        $OverrideJson.XPathSubstitution.PSObject.Properties | ForEach-Object {
+            $Element = $Page.SelectSingleNode($_.Name)
+            if ($null -ne $Element) {
+                $Element.Value = $_.Value
+            }
+        }
         $Title = $_.SelectSingleNode("pagetitle").InnerText
         $PanelElement = $_.SelectSingleNode($(XPathByNameInsensitive "panel"))
         $ParentName = $PanelElement.SelectSingleNode($(XPathByNameInsensitive "parent")).InnerText
@@ -836,6 +852,13 @@ function Get-TypeAnnotation {
     $Lua = @{}
     $Pages = Get-XmlDocPages $MarkupString
     $Pages | ForEach-Object {
+        $Page = $_
+        $OverrideJson.XPathSubstitution.PSObject.Properties | ForEach-Object {
+            $Element = $Page.SelectSingleNode($_.Name)
+            if ($null -ne $Element) {
+                $Element.Value = $_.Value
+            }
+        }
         $TypeElement = $_.SelectSingleNode($(XPathByNameInsensitive "type"))
         $SummaryElement = $TypeElement.SelectSingleNode($(XPathByNameInsensitive "summary"))
 
@@ -869,6 +892,13 @@ function Get-EnumAnnotation {
     $Lua = @{}
     $Pages = Get-XmlDocPages $MarkupString
     $Pages | ForEach-Object {
+        $Page = $_
+        $OverrideJson.XPathSubstitution.PSObject.Properties | ForEach-Object {
+            $Element = $Page.SelectSingleNode($_.Name)
+            if ($null -ne $Element) {
+                $Element.Value = $_.Value
+            }
+        }
         $Title = $_.SelectSingleNode("pagetitle").InnerText
         $EnumElement = $_.SelectSingleNode($(XPathByNameInsensitive "enum"))
         $ExampleElements = $_.SelectNodes($(XPathByNameInsensitive "example"))
@@ -949,6 +979,13 @@ function Get-StructAnnotation {
     }
     $Pages = Get-XmlDocPages $MarkupString
     $Pages | ForEach-Object {
+        $Page = $_
+        $OverrideJson.XPathSubstitution.PSObject.Properties | ForEach-Object {
+            $Element = $Page.SelectSingleNode($_.Name)
+            if ($null -ne $Element) {
+                $Element.Value = $_.Value
+            }
+        }
         $Title = $_.SelectSingleNode("pagetitle").InnerText
         $StructElement = $_.SelectSingleNode($(XPathByNameInsensitive "structure"))
         $ExampleElements = $_.SelectNodes($(XPathByNameInsensitive "example"))
@@ -970,7 +1007,7 @@ function Get-StructAnnotation {
                     $Type = Get-ElementType $_
                     $Default = $_.Attributes["default"].Value
                     $Comments = Get-Comments $_
-                    if ($Default) { $Type += "?" }
+                    if ($Default -and (-not $Default -match "\n")) { $Type += "?" }
                     if ($Comments -eq "---`n") { $Comments = "" }
                     $Text += $Comments
                     $Text += "---@field $Name $Type`n"
@@ -990,6 +1027,13 @@ function Get-EventAnnotation {
     $Lua = Get-FunctionAnnotation $MarkupString
     $Pages = Get-XmlDocPages $MarkupString
     $Pages | ForEach-Object {
+        $Page = $_
+        $OverrideJson.XPathSubstitution.PSObject.Properties | ForEach-Object {
+            $Element = $Page.SelectSingleNode($_.Name)
+            if ($null -ne $Element) {
+                $Element.Value = $_.Value
+            }
+        }
         $FunctionElement = $_.SelectSingleNode($(XPathByNameInsensitive "function"))
         $ExampleElements = $_.SelectNodes($(XPathByNameInsensitive "example"))
         $DescriptionElement = $FunctionElement.SelectSingleNode($(XPathByNameInsensitive "description"))
