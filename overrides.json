@@ -77,6 +77,8 @@
         "function[@parent=\"Entity\" and @name=\"GetSubModels\"]/rets/ret[1]/@type": "{ id: integer, name: string }[]",
         "function[@parent=\"Entity\" and @name=\"SetNW2Var\"]/args/arg[2]/@type":
             "Angle|boolean|Entity|number|string|Vector",
+            
+        "function[@parent=\"IMaterial\" and @name=\"SetTexture\"]/args/arg[2]/@type": "ITexture|string",
 
         "function[@parent=\"Panel\" and @name=\"GetChildren\"]/rets/ret[1]/@type": "Panel[]",
         "function[@parent=\"PhysObj\" and @name=\"GetFrictionSnapshot\"]/rets/ret[1]/@type":
