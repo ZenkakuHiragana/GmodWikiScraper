@@ -1007,7 +1007,7 @@ function Get-StructAnnotation {
                     $Type = Get-ElementType $_
                     $Default = $_.Attributes["default"].Value
                     $Comments = Get-Comments $_
-                    if ($Default -and (-not $Default -match "\n")) { $Type += "?" }
+                    if (-not ([string]::IsNullOrEmpty($Default) -or ($Default -match "\n"))) { $Type += "?" }
                     if ($Comments -eq "---`n") { $Comments = "" }
                     $Text += $Comments
                     $Text += "---@field $Name $Type`n"

@@ -134,7 +134,9 @@ color_transparent = Color(255, 255, 255, 0)
 ---@field [3] number The Z component of the vector.
 ---@operator add(Vector): Vector # Returns new [Vector](https://wiki.facepunch.com/gmod/Vector) with the result of addition.
 ---@operator div(number): Vector # Returns new [Vector](https://wiki.facepunch.com/gmod/Vector) with the result of division.
----@operator mul(number | Vector): Vector # Returns new [Vector](https://wiki.facepunch.com/gmod/Vector) with the result of multiplication.
+---@operator div(Vector): Vector # Returns new [Vector](https://wiki.facepunch.com/gmod/Vector) with the result of division.
+---@operator mul(number): Vector # Returns new [Vector](https://wiki.facepunch.com/gmod/Vector) with the result of multiplication.
+---@operator mul(Vector): Vector # Returns new [Vector](https://wiki.facepunch.com/gmod/Vector) with the result of multiplication.
 ---@operator sub(Vector): Vector # Returns new [Vector](https://wiki.facepunch.com/gmod/Vector) with the result of subtraction.
 ---@operator unm: Vector # Returns new [Vector](https://wiki.facepunch.com/gmod/Vector) with the result of negation.
 
