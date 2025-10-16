@@ -107,6 +107,8 @@
 
         "function[@parent=\"player\" and @name=\"Iterator\"]/rets/ret[1]/@type": "fun(t: Player[], key?: integer): integer, Player",
         
+        "function[@parent=\"render\" and @name=\"DrawTextureToScreen\"]/args/arg[1]/@type": "ITexture|string",
+        "function[@parent=\"render\" and @name=\"DrawTextureToScreenRect\"]/args/arg[1]/@type": "ITexture|string",
         "function[@parent=\"render\" and @name=\"OverrideAlphaWriteEnable\"]/args/arg[2]/@type": "boolean?",
         "function[@parent=\"render\" and @name=\"OverrideColorWriteEnable\"]/args/arg[2]/@type": "boolean?",
         "function[@parent=\"render\" and @name=\"OverrideDepthEnable\"]/args/arg[2]/@type": "boolean?",
