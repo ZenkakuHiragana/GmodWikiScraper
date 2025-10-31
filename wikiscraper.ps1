@@ -55,7 +55,7 @@ function Get-PageList {
     $Response = Invoke-WebRequest -Uri "$BaseUrl/~pagelist?format=json"
     $Json = $Response.Content
     $List = ConvertFrom-Json $Json
-    
+
     # すでに取得済みの一覧がある場合、updateCountを比較して更新分を抽出する
     $HasPreviousJson = Test-Path -LiteralPath pagelist.json
     if ($Incremental -and $HasPreviousJson) {
@@ -92,7 +92,7 @@ function Invoke-PageRequests {
             $Status = "$([Math]::Round($Percent)) % | $($Hash['Progress']) / $NumPages"
             Write-Progress -Activity "Scraping..." -Status $Status -PercentComplete $Percent
         }
-        
+
         # ファイル名として使えないコロンやスラッシュをURLエンコードして回避する
         $Name = $_.address
         $FileName = "$([System.Web.HttpUtility]::UrlEncode($Name)).json"

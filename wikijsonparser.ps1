@@ -53,7 +53,7 @@ function Merge-Json {
             -Status "$script:Progress / $NumOutputs" `
             -PercentComplete $(100 * $script:Progress / $NumOutputs)
     }
-    
+
     # 全ページを固めて出力：allpages-raw.json
     ConvertTo-Json -Depth 3 $JsonAll | Out-File -Encoding utf8 -FilePath allpages-raw.json; Push-Progress
 

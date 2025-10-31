@@ -139,7 +139,7 @@ try {
     Get-TagAppearanceCount "structs-sv.json"    "tags-structs-sv.json"
     Get-TagAppearanceCount "events-cl.json"     "tags-events-cl.json"
     Get-TagAppearanceCount "events-sv.json"     "tags-events-sv.json"
-    
+
     Get-MarkupTagAppearanceCount "allpages-slim.json" "markup.json"
     Get-MarkupTagAppearanceCount "allpages-cl.json"   "markup-allpages-cl.json"
     Get-MarkupTagAppearanceCount "allpages-sv.json"   "markup-allpages-sv.json"

@@ -20,13 +20,13 @@ function Get-XPath {
         [ValidateNotNull()]
         [System.Xml.XmlNode] $node
     )
-  
+
     if ($node -is [System.Xml.XmlDocument]) { return '' } # Root reached
     $isAttrib = $node -is [System.Xml.XmlAttribute]
-    
+
     # IMPORTANT: Use get_*() accessors for all type-native property access,
     #            to prevent name collision with Powershell's adapted-DOM ETS properties.
-  
+
     # Get the node's name.
     $name = if ($isAttrib) {
         '@' + $node.get_Name()
@@ -35,7 +35,7 @@ function Get-XPath {
     } else { # element
         $node.get_Name()
     }
-  
+
     # Count any preceding siblings with the same name.
     # Note: To avoid having to provide a namespace manager, we do NOT use
     #       an XPath query to get the previous siblings.
@@ -44,13 +44,13 @@ function Get-XPath {
         if ($prevSib.get_Name() -ceq $name) { ++$prevSibsCount }
         $prevSib = $prevSib.get_PreviousSibling()
     }
-    
+
     # Determine the (1-based) index among like-named siblings, if applicable.
     $ndx = if ($prevSibsCount) { '[{0}]' -f (1 + $prevSibsCount) }
-    
+
     # Determine the owner / parent element.
     $ownerOrParentElem = if ($isAttrib) { $node.get_OwnerElement() } else { $node.get_ParentNode() }
-  
+
     # Recurse upward and concatenate with "/"
     "{0}/{1}" -f (Get-XPath $ownerOrParentElem), ($name + $ndx)
 }
@@ -99,7 +99,7 @@ function Get-SafeName {
 
         # Lua types
         "nil", "boolean", "number", "string", "userdata", "function", "thread", "table",
-        
+
         # Built-in Lua functions
         "assert", "collectgarbage", "dofile", "error", "getmetatable", "ipairs", "load",
         "loadfile", "next", "pairs", "pcall", "print", "rawequal", "rawget", "rawset",
@@ -187,7 +187,7 @@ function Get-CallbackType {
     $Returns = $Callback.SelectNodes($(XPathByNameInsensitive "ret"))
     $Text = "fun($($($Arguments | Get-AllText) -join ", "))"
     if ($Returns.Count -gt 0) {
-        "${Text}: $($Returns | Get-AllText -join ", ")" 
+        "${Text}: $($Returns | Get-AllText -join ", ")"
     }
     else {
         "$Text"
@@ -410,7 +410,7 @@ function Get-Ret {
     $ParentName = $Parent.get_Name().ToLowerInvariant()
     $Name = $Element.name
     $Type = Get-ElementType $Element
-    
+
     # コールバック関数の引数を説明するMarkdown構文を返す
     if ($IsDescription) {
         $Text = "`n1. **" + (Get-TypeLinkText $Type)
@@ -427,7 +427,7 @@ function Get-Ret {
     if ($null -ne $CallbackFunType) {
         $Type = $Type -replace "function", $CallbackFunType
     }
-    
+
     # 可変長引数の場合は"vararg"という型名になっているので置き換える
     # Lua Language Serverでは可変長引数の型も指定できるが、GMOD Wikiには指定がないのでanyとする。
     if ($Type -match "vararg") {
@@ -827,7 +827,7 @@ function Get-PanelAnnotation {
 
         $Description = $DescriptionElement | Get-AllText
         $Examples = $ExampleElements | Get-AllText
-        
+
         $NoParent = [string]::IsNullOrEmpty(($ParentName))
         $ParentPrefix = $NoParent ? "" : " : "
         $Text = $Description
@@ -868,7 +868,7 @@ function Get-TypeAnnotation {
         # 存在するけど使わない属性
         # $TypeCategory = $TypeElement.category # "classfunc" or "hook" or "libraryfunc"
         # $TypeIs = $TypeElement.is # "class" or "library"
-        
+
         $NoParent = [string]::IsNullOrEmpty(($TypeParent))
         $ParentPrefix = $NoParent ? "" : " : "
         $Text = Get-Comments $SummaryElement
@@ -909,7 +909,7 @@ function Get-EnumAnnotation {
         $Description = $DescriptionElement | Get-AllText
         $Examples = $ExampleElements | Get-AllText
         $Variables = "`n"
-        
+
         $IsTable = $false
         $ItemsElement.get_ChildNodes() | ForEach-Object {
             $IsTable = $IsTable -or ($_.Attributes["key"].Value -match "\.")
@@ -995,7 +995,7 @@ function Get-StructAnnotation {
 
         $Description = $DescriptionElement | Get-AllText
         $Examples = $ExampleElements | Get-AllText
-        
+
         $Text = $Description
         $Text += $Examples -join ""
         $Text += "---@class Structure.$Title`n"
@@ -1082,7 +1082,7 @@ function Get-EventAnnotation {
                 $Text += ": ${ReturnsDefinition}?"
             }
             $Text += "`nfunction hook.Add(eventName, identifier, func) end"
-            
+
             $Lua.$FunctionParent += $Text
         }
     }
