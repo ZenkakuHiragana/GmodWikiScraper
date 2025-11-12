@@ -51,7 +51,7 @@
             "table<string, { type: string, value: Angle|boolean|Entity|number|string|Vector }>",
         "function[@parent=\"Entity\" and @name=\"GetNW2Vector\"]/rets/ret[1]/@type": "Vector",
         "function[@parent=\"Entity\" and @name=\"GetNW2Vector\"]/args/arg[2]/@type": "Vector?",
-        
+
         "function[@parent=\"Entity\" and @name=\"GetNWAngle\"]/rets/ret[1]/@type": "Angle",
         "function[@parent=\"Entity\" and @name=\"GetNWAngle\"]/args/arg[2]/@type": "Angle?",
         "function[@parent=\"Entity\" and @name=\"GetNWBool\"]/rets/ret[1]/@type": "boolean",
@@ -77,7 +77,7 @@
         "function[@parent=\"Entity\" and @name=\"GetSubModels\"]/rets/ret[1]/@type": "{ id: integer, name: string }[]",
         "function[@parent=\"Entity\" and @name=\"SetNW2Var\"]/args/arg[2]/@type":
             "Angle|boolean|Entity|number|string|Vector",
-            
+
         "function[@parent=\"IMaterial\" and @name=\"SetTexture\"]/args/arg[2]/@type": "ITexture|string",
 
         "function[@parent=\"Panel\" and @name=\"GetChildren\"]/rets/ret[1]/@type": "Panel[]",
@@ -85,13 +85,13 @@
             "{ Other: PhysObj, EnergyAbsorbed: number, FrictionCoefficient: number, NormalForce: number, Normal: Vector, ContactPoint: Vector, Material: integer, MaterialOther: integer }[]",
         "function[@parent=\"PhysObj\" and @name=\"GetMesh\"]/rets/ret[1]/@type": "Structure.MeshVertex[]?",
         "function[@parent=\"PhysObj\" and @name=\"GetMeshConvexes\"]/rets/ret[1]/@type": "Structure.MeshVertex[]?",
-        
+
         "function[@parent=\"Vector\" and @name=\"Mul\"]/args/arg[1]/@type": "number|Vector|VMatrix",
 
         "function[@parent=\"constraint\" and @name=\"GetAllConstrainedEntities\"]/rets/ret[1]/@type": "Entity[]",
         "function[@parent=\"cvars\" and @name=\"GetConVarCallbacks\"]/rets/ret[1]/@type":
         "(fun(convar: string, old: string, new: string)|{ [1}: fun(convar: string, old: string, new: string), [2}: string }))[]?",
-        
+
         "function[@parent=\"engine\" and @name=\"GetAddons\"]/rets/ret[1]/@type":
             "{ downloaded: boolean, models: integer, title: string, file: string, mounted: boolean, wsid: string, size: integer, updated: integer }[]",
         "function[@parent=\"engine\" and @name=\"GetGames\"]/rets/ret[1]/@type":
@@ -100,20 +100,20 @@
             "{ maps: string, title: string, menusystem: boolean, name: string, workshopid: string }[]",
 
         "function[@parent=\"ents\" and @name=\"Iterator\"]/rets/ret[1]/@type": "fun(t: Entity[], key?: integer): integer, Entity",
-        
+
         "function[@parent=\"file\" and @name=\"Find\"]/rets/ret[1]/@type": "string[]?",
         "function[@parent=\"file\" and @name=\"Find\"]/rets/ret[2]/@type": "string[]?",
         "function[@parent=\"file\" and @name=\"Read\"]/args/arg[2]/@type": "string|boolean?",
 
         "function[@parent=\"player\" and @name=\"Iterator\"]/rets/ret[1]/@type": "fun(t: Player[], key?: integer): integer, Player",
-        
+
         "function[@parent=\"render\" and @name=\"DrawTextureToScreen\"]/args/arg[1]/@type": "ITexture|string",
         "function[@parent=\"render\" and @name=\"DrawTextureToScreenRect\"]/args/arg[1]/@type": "ITexture|string",
         "function[@parent=\"render\" and @name=\"OverrideAlphaWriteEnable\"]/args/arg[2]/@type": "boolean?",
         "function[@parent=\"render\" and @name=\"OverrideColorWriteEnable\"]/args/arg[2]/@type": "boolean?",
         "function[@parent=\"render\" and @name=\"OverrideDepthEnable\"]/args/arg[2]/@type": "boolean?",
         "function[@parent=\"render\" and @name=\"ModelMaterialOverride\"]/args/arg[1]/@type": "IMaterial?",
-        
+
         "function[@parent=\"string\" and @name=\"Explode\"]/rets/ret[1]/@type": "string[]",
         "function[@parent=\"string\" and @name=\"GetExtensionFromFilename\"]/rets/ret[1]/@type": "string?",
         "function[@parent=\"string\" and @name=\"gfind\"]/rets/ret[1]/@type": "fun(): string",
@@ -191,7 +191,7 @@
         "function[@parent=\"table\" and @name=\"SortByMember\"]/args/arg[1]/@type": "table<K, V>[]",
         "function[@parent=\"table\" and @name=\"SortByMember\"]/args/arg[2]/@type": "K",
         "function[@parent=\"table\" and @name=\"SortDesc\"]/args/arg[1]/@type": "T[]",
-        
+
         "function[@parent=\"undo\" and @name=\"GetTable\"]/rets/ret[1]/@type": "table<integer, Structure.Undo[]>",
 
         "function[@parent=\"util\" and @name=\"GetModelMeshes\"]/rets/ret[1]/@type":
@@ -242,7 +242,27 @@
         "structure[contains(../address/text(),\"VehicleParams\")]/fields/item[@name=\"axles\"]/@type":
             "Structure.VehicleParamsAxle[]",
         "structure[contains(../address/text(),\"VehicleParamsEngine\")]/fields/item[@name=\"gearRatio\"]/@type":
-            "number[]"
+            "number[]",
+        "structure[contains(../address/text(),\"ViewData\")]/fields/item[@name=\"origin\"]/@type": "Vector?",
+        "structure[contains(../address/text(),\"ViewData\")]/fields/item[@name=\"angles\"]/@type": "Angle?",
+        "structure[contains(../address/text(),\"ViewData\")]/fields/item[@name=\"aspect\"]/@type": "number?",
+        "structure[contains(../address/text(),\"ViewData\")]/fields/item[@name=\"x\"]/@type": "number?",
+        "structure[contains(../address/text(),\"ViewData\")]/fields/item[@name=\"y\"]/@type": "number?",
+        "structure[contains(../address/text(),\"ViewData\")]/fields/item[@name=\"w\"]/@type": "number?",
+        "structure[contains(../address/text(),\"ViewData\")]/fields/item[@name=\"h\"]/@type": "number?",
+        "structure[contains(../address/text(),\"ViewData\")]/fields/item[@name=\"viewmodelfov\"]/@type": "number?",
+        "structure[contains(../address/text(),\"ViewData\")]/fields/item[@name=\"fov\"]/@type": "number?",
+        "structure[contains(../address/text(),\"ViewData\")]/fields/item[@name=\"ortho\"]/@type": "true|{ left: number?, right: number?, top: number?, bottom: number? }?",
+        "structure[contains(../address/text(),\"ViewData\")]/fields/item[@name=\"ortholeft\"]/@type": "number?",
+        "structure[contains(../address/text(),\"ViewData\")]/fields/item[@name=\"orthoright\"]/@type": "number?",
+        "structure[contains(../address/text(),\"ViewData\")]/fields/item[@name=\"orthotop\"]/@type": "number?",
+        "structure[contains(../address/text(),\"ViewData\")]/fields/item[@name=\"orthobottom\"]/@type": "number?",
+        "structure[contains(../address/text(),\"ViewData\")]/fields/item[@name=\"znear\"]/@type": "number?",
+        "structure[contains(../address/text(),\"ViewData\")]/fields/item[@name=\"zfar\"]/@type": "number?",
+        "structure[contains(../address/text(),\"ViewData\")]/fields/item[@name=\"znearviewmodel\"]/@type": "number?",
+        "structure[contains(../address/text(),\"ViewData\")]/fields/item[@name=\"zfarviewmodel\"]/@type": "number?",
+        "structure[contains(../address/text(),\"ViewData\")]/fields/item[@name=\"bloomtone\"]/@type": "boolean?",
+        "structure[contains(../address/text(),\"ViewData\")]/fields/item[@name=\"offcenter\"]/@type": "{ left: number?, right: number?, top: number?, bottom: number? }?"
     },
     "GenericsAdd": {
         "Either": "T, U",
