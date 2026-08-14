@@ -963,6 +963,8 @@ async def run(cli: argparse.Namespace) -> None:
         llm_model_func=forbidden_llm,
         llm_model_name="disabled-deterministic-import",
         embedding_func=embedding_func,
+        embedding_batch_num=int(args.embedding_batch_num),
+        embedding_func_max_async=int(args.embedding_func_max_async),
         kv_storage=args.kv_storage,
         graph_storage=args.graph_storage,
         vector_storage=args.vector_storage,
