@@ -208,9 +208,9 @@
         "function[@parent=\"util\" and @name=\"IntersectRayWithPlane\"]/rets/ret[1]/@type": "Vector?",
         "function[@parent=\"util\" and @name=\"IntersectRayWithSphere\"]/rets/ret[1]/@type": "number?",
         "function[@parent=\"util\" and @name=\"IntersectRayWithSphere\"]/rets/ret[2]/@type": "number?",
-        "function[@parent=\"util\" and @name=\"KeyValuesToTable\"]/rets/ret[1]/@type": "table<string, string>",
+        "function[@parent=\"util\" and @name=\"KeyValuesToTable\"]/rets/ret[1]/@type": "KeyValues",
         "function[@parent=\"util\" and @name=\"KeyValuesToTablePreserveOrder\"]/rets/ret[1]/@type":
-            "{ Key: string, Value: table<string, string>[] }[]",
+            "{ Key: string, Value: KeyValue[] }[]",
         "function[@parent=\"util\" and @name=\"NetworkIDToString\"]/rets/ret[1]/@type": "string?",
         "function[@parent=\"util\" and @name=\"Timer\"]/rets/ret[1]/@type": "UtilTimer",
         "function[@parent=\"util\" and @name=\"QuickTrace\"]/args/arg[3]/@type":

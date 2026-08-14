@@ -146,6 +146,13 @@ color_transparent = Color(255, 255, 255, 0)
 ---@operator mul(Vector): Vector # Returns new [VMatrix](https://wiki.facepunch.com/gmod/VMatrix) or [Vector](https://wiki.facepunch.com/gmod/Vector) with the result of multiplication.
 ---@operator sub(VMatrix): VMatrix # Returns new [VMatrix](https://wiki.facepunch.com/gmod/VMatrix) with the result of subtraction.
 
+---@class KeyValue
+---@field Key   string
+---@field Value string|KeyValue[]
+
+---@class KeyValues
+---@field [string] string|KeyValues
+
 
 
 ---### ![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAAAAAAAAQCEeRdzAAABJklEQVR4nJ3TvUrDYBjF8UeL2mRR70FEULwHBW/IWQt6KbaYxjgJGZyqk3vjItpWKtKpn6bS16b9mzcpQqFNG4ezhJMf4fBExkBDQe75hz23j+n4GGFMpz+V+JkfdXS3pfSbIKNhl7PSPZJXiPXFqu0nRnek0OX4QdFWI6TpXeIVshzZd0gxIBOWFiWC8h1y5QHy4e5TLa5Tsc0JMlwKkeseu+43UnM2qdoG7zfZ1Ije5A/4D2KE404BaRFzFpAGmQssiyQCyyALgUVIPOLtdiKQhERfoA/pzdpIiQSsWD129CE1yxe8FiQsZdMhV358yoHq0CidREjFWptA81MrZnjJC6ePT7QGAQJjAtWm5eWouwdUnS30sDMT7lV3D+l456A+o9/5F23WsF7ghkQuAAAAAElFTkSuQmCC) Description [(📓Wiki)](https://wiki.facepunch.com/gmod/)
