@@ -1,3 +1,4 @@
+.env
 .trash
 .vscode/client
 .vscode/server
