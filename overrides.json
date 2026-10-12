@@ -123,6 +123,7 @@
         "function[@parent=\"surface\" and @name=\"DrawCircle\"]/args/arg[4]/@type": "number|Color",
         "function[@parent=\"surface\" and @name=\"DrawCircle\"]/args/arg[5]/@type": "number?",
         "function[@parent=\"surface\" and @name=\"DrawCircle\"]/args/arg[6]/@type": "number?",
+        "function[@parent=\"surface\" and @name=\"DrawPoly\"]/args/arg[1]/@type": "Structure.PolygonVertex[]",
 
         "function[@parent=\"table\" and @name=\"Add\"]/args/arg[1]/@type": "T[]",
         "function[@parent=\"table\" and @name=\"Add\"]/args/arg[2]/@type": "table<any, U>",

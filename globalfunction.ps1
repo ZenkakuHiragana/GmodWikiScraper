@@ -904,6 +904,8 @@ function Get-EnumAnnotation {
         $ExampleElements = $_.SelectNodes($(XPathByNameInsensitive "example"))
         $DescriptionElement = $EnumElement.SelectSingleNode($(XPathByNameInsensitive "description"))
         $ItemsElement = $EnumElement.SelectSingleNode($(XPathByNameInsensitive "items"))
+        $ItemList = $ItemsElement.SelectNodes($(XPathByNameInsensitive "item"))
+
 
         # アノテーション要素の生成
         $Description = $DescriptionElement | Get-AllText
@@ -911,7 +913,7 @@ function Get-EnumAnnotation {
         $Variables = "`n"
 
         $IsTable = $false
-        $ItemsElement.get_ChildNodes() | ForEach-Object {
+        $ItemList | ForEach-Object {
             $IsTable = $IsTable -or ($_.Attributes["key"].Value -match "\.")
         }
         # エイリアスが必ず展開されて見栄えが悪いので、先頭を空行で埋める
@@ -924,7 +926,7 @@ function Get-EnumAnnotation {
         if ($IsTable) {
             $Text += "---@enum Enum.$Title`n"
             $Text += "$Title = {`n"
-            $ItemsElement.get_ChildNodes() | ForEach-Object {
+            $ItemList | ForEach-Object {
                 $Key = $_.Attributes["key"].Value -replace ".+?\."
                 $Key = [regex]::Matches($Key, "^[A-Za-z0-9_]+").Value
                 if (-not [string]::IsNullOrEmpty($Key)) {
@@ -942,7 +944,7 @@ function Get-EnumAnnotation {
         }
         else {
             $Text += "---@alias Enum.$Title`n"
-            $ItemsElement.get_ChildNodes() | ForEach-Object {
+            $ItemList | ForEach-Object {
                 $Key = $_.Attributes["key"].Value
                 $Key = [regex]::Matches($Key, "^[A-Za-z0-9_]+").Value
                 if (-not [string]::IsNullOrEmpty($Key)) {
